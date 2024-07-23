@@ -1,5 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn, TableInheritance } from 'typeorm';
-import { ValidRoles } from '../interfaces/valid-roles.interfaces';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  TableInheritance,
+} from 'typeorm';
+import { ValidRoles } from '../interfaces/valid-roles.interface';
+import { Role } from './userRole.entity';
 
 @Entity({ name: 'users' })
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
@@ -26,11 +34,6 @@ export class User {
   @Column({
     type: 'text',
   })
-  role: ValidRoles;
-
-  @Column({
-    type: 'text',
-  })
   about: string;
 
   @Column({
@@ -44,10 +47,9 @@ export class User {
   @Column({
     type: 'text',
   })
-  password: string
-}
+  password: string;
 
-@Entity()
-export class Student extends User {
-  
+  @ManyToOne(() => Role, (role) => role.users)
+  @JoinColumn({ name: 'role_id' })
+  role: Role;
 }

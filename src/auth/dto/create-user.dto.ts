@@ -1,5 +1,11 @@
-import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
-import { ValidRoles } from '../interfaces/valid-roles.interfaces';
+import {
+  IsEmail,
+  IsEnum,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
+import { ValidRoles } from '../interfaces/valid-roles.interface';
 
 export class CreateUserDto {
   @IsString()
@@ -20,7 +26,6 @@ export class CreateUserDto {
   @IsString()
   about: string;
 
-
   @IsString()
-  role: ValidRoles 
+  roleName: string
 }

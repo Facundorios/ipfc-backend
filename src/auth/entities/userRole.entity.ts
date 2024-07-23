@@ -1,5 +1,12 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { ValidRoles } from '../interfaces/valid-roles.interfaces';
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { ValidRoles } from '../interfaces/valid-roles.interface';
+import { User } from './user.entity';
 
 @Entity({ name: 'roles' })
 export class Role {
@@ -12,10 +19,13 @@ export class Role {
   })
   role: ValidRoles;
 
+  @OneToMany(() => User, (user) => user.role)
+  users: User[];
+
   @BeforeInsert()
   checkValidRole() {
     if (!Object.values(ValidRoles).includes(this.role)) {
       throw new Error(`Invalid role: ${this.role}`);
     }
-  } 
+  }
 }
