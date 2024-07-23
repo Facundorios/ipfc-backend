@@ -5,10 +5,11 @@ import { SeedService } from './seed.service';
 export class SeedController {
   constructor(private readonly seedService: SeedService) {}
 
-
   @Get()
   executeSeed() {
-    this.seedService.roleSeed()
+    this.seedService.roleSeed();
+    this.seedService.companyIndustrySeed();
+    this.seedService.companyModalitySeed();
+    this.seedService.companyContractSeed();
   }
-
 }

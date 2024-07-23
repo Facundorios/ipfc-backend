@@ -1,6 +1,5 @@
 import {
   IsEmail,
-  IsEnum,
   IsString,
   MaxLength,
   MinLength,

@@ -4,13 +4,10 @@ import {
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
-  TableInheritance,
 } from 'typeorm';
-import { ValidRoles } from '../interfaces/valid-roles.interface';
 import { Role } from './userRole.entity';
 
 @Entity({ name: 'users' })
-@TableInheritance({ column: { type: 'varchar', name: 'type' } })
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;

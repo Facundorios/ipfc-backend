@@ -30,12 +30,11 @@ export class AuthService {
       const roleNameAsString: string = createUserDto.roleName; // Este valor vendría del DTO
       const roleValue: ValidRoles = ValidRoles[roleNameAsString];
       if (!roleValue) throw new Error('Invalid role name');
-
+      
       const { password, roleName, ...rest } = createUserDto;
+
       const role = await this.roleRepository.findOne({
-        where: {
-          role: roleValue,
-        },
+        where: { role: roleValue },
       });
       if (!role) throw new Error('Role not found');
 
@@ -46,26 +45,17 @@ export class AuthService {
       });
 
       await this.userRepository.save(user);
-
-      return {
-        ...user,
-        token: this.generateToken({ id: user.id }),
-      };
+      return { token: this.generateToken({ id: user.id }) };
     } catch (error) {
       console.log(error);
     }
   }
 
-  async login(loginDto: LoginDto) {
+  async loginUser(loginDto: LoginDto) {
     const { email, password } = loginDto;
 
-    const user = await this.userRepository.findOne({
-      where: { email: email },
-    });
-    if (!user)
-      throw new NotFoundException(
-        `User with email: ${email} doesn't exist on db.`,
-      );
+    const user = await this.userRepository.findOne({ where: { email: email } });
+    if (!user) throw new NotFoundException(`User not found with: ${email}.`);
 
     if (!bcrypt.compareSync(password, user.password)) {
       throw new UnauthorizedException('Incorrect Password');
