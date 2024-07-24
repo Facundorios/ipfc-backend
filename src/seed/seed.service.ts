@@ -4,16 +4,21 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { Role } from 'src/auth/entities/userRole.entity';
-
 import { ValidRoles } from 'src/auth/interfaces/valid-roles.interface';
-
-import { companyIndustries } from './data/industriesCompanyt';
-import { companyModalities } from './data/modalityCompany';
-import { companyContracts } from './data/contractsCompany';
-
-import { CompanyIndustry } from './entities/company-industry.entity';
-import { CompanyModality } from './entities/company-modality.entity';
-import { CompanyContract } from './entities/company-contract.entity';
+import {
+  companyContracts,
+  companyIndustries,
+  jobModalities,
+  countriesWorld,
+  languagesWorld,
+} from './data';
+import {
+  CompanyContract,
+  CompanyIndustry,
+  JobModality,
+  WorldCountry,
+  Language,
+} from './entities';
 
 @Injectable()
 export class SeedService {
@@ -24,11 +29,17 @@ export class SeedService {
     @InjectRepository(CompanyIndustry)
     private readonly companyIndustryRepository: Repository<CompanyIndustry>,
 
-    @InjectRepository(CompanyModality)
-    private readonly companyModalityRepository: Repository<CompanyModality>,
+    @InjectRepository(JobModality)
+    private readonly jobModalityRepository: Repository<JobModality>,
 
     @InjectRepository(CompanyContract)
     private readonly companyContractRepository: Repository<CompanyContract>,
+
+    @InjectRepository(WorldCountry)
+    private readonly worldCountryRepository: Repository<WorldCountry>,
+
+    @InjectRepository(Language)
+    private readonly languageRepository: Repository<Language>,
   ) {}
 
   async roleSeed() {
@@ -46,12 +57,12 @@ export class SeedService {
     return this.companyIndustryRepository.save(industries);
   }
 
-  async companyModalitySeed() {
-    await this.companyModalityRepository.delete({});
-    const modalities = Object.values(companyModalities).map((modality) => {
-      return this.companyModalityRepository.create(modality);
+  async jobModalitySeed() {
+    await this.jobModalityRepository.delete({});
+    const modalities = Object.values(jobModalities).map((modality) => {
+      return this.jobModalityRepository.create(modality);
     });
-    return this.companyModalityRepository.save(modalities);
+    return this.jobModalityRepository.save(modalities);
   }
 
   async companyContractSeed() {
@@ -60,5 +71,21 @@ export class SeedService {
       return this.companyContractRepository.create(contract);
     });
     return this.companyContractRepository.save(contracts);
+  }
+
+  async worldCountrySeed() {
+    await this.worldCountryRepository.delete({});
+    const countries = Object.values(countriesWorld).map((country) => {
+      return this.worldCountryRepository.create(country);
+    });
+    return this.worldCountryRepository.save(countries);
+  }
+
+  async languageSeed() {
+    await this.languageRepository.delete({});
+    const languages = Object.values(languagesWorld).map((language) => {
+      return this.languageRepository.create(language);
+    });
+    return this.languageRepository.save(languages);
   }
 }

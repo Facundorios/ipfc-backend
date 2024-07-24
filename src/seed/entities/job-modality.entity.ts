@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class CompanyContract {
+export class JobModality {
   @PrimaryColumn()
   id: number;
 

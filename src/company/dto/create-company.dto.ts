@@ -8,15 +8,18 @@ import {
 } from 'class-validator';
 
 export class CreateCompanyDto {
+  
   @IsString()
   name: string;
+
   @IsString()
   description: string;
+  
   @IsInt()
   @IsPositive()
   @IsNumber()
-  industry_Id: number;
-  
+  industry_id: number;
+
   @IsString()
   address: string;
 

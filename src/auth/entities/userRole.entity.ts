@@ -8,7 +8,7 @@ import {
 import { ValidRoles } from '../interfaces/valid-roles.interface';
 import { User } from './user.entity';
 
-@Entity({ name: 'roles' })
+@Entity({ name: 'role' })
 export class Role {
   @PrimaryGeneratedColumn('uuid')
   id: string;

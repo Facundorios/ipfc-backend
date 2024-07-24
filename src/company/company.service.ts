@@ -1,26 +1,43 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCompanyDto } from './dto/create-company.dto';
-import { UpdateCompanyDto } from './dto/update-company.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Company } from './entities/company.entity';
 import { Repository } from 'typeorm';
+import { JobOfferDto } from './dto/create-job-offer.dto';
+import { JobOffer } from './entities/jobOffer.entity';
 
 @Injectable()
 export class CompanyService {
   constructor(
     @InjectRepository(Company)
     private readonly companyRepostiroy: Repository<Company>,
+
+    @InjectRepository(JobOffer)
+    private readonly jobOfferRepository: Repository<JobOffer>,
   ) {}
 
-  create(createCompanyDto: CreateCompanyDto) {
+  async create(createCompanyDto: CreateCompanyDto) {
     return this.companyRepostiroy.save(createCompanyDto);
   }
 
-  findAll() {
+  async findAll() {
     return this.companyRepostiroy.find();
   }
 
-  setCompanyStatus(id: string, status: string) {
-    return this.companyRepostiroy.update(id, { status: status})
+  async findOne(id: string) {
+    const company = await this.companyRepostiroy.findOneBy({ id });
+    return company;
   }
+
+  async setCompanyStatus(id: string, status: string) {
+    const company = this.findOne(id);
+    if (!company) throw new Error(`Company with id ${id} not found`);
+
+    const companyStatus = await this.companyRepostiroy.update(id, {
+      status: status,
+    });
+    return companyStatus;
+  }
+
+  async createJobOffer(jobOfferDto: JobOfferDto) {}
 }

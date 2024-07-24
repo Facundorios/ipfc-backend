@@ -3,9 +3,13 @@ import { SeedService } from './seed.service';
 import { SeedController } from './seed.controller';
 import { AuthModule } from 'src/auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CompanyIndustry } from './entities/company-industry.entity';
-import { CompanyModality } from './entities/company-modality.entity';
-import { CompanyContract } from './entities/company-contract.entity';
+import {
+  CompanyContract,
+  CompanyIndustry,
+  JobModality,
+  Language,
+} from './entities';
+import { WorldCountry } from './entities/world-countries.entity';
 
 @Module({
   controllers: [SeedController],
@@ -14,8 +18,10 @@ import { CompanyContract } from './entities/company-contract.entity';
     AuthModule,
     TypeOrmModule.forFeature([
       CompanyIndustry,
-      CompanyModality,
+      JobModality,
       CompanyContract,
+      WorldCountry,
+      Language,
     ]),
   ],
 })

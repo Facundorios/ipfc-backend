@@ -9,7 +9,9 @@ export class SeedController {
   executeSeed() {
     this.seedService.roleSeed();
     this.seedService.companyIndustrySeed();
-    this.seedService.companyModalitySeed();
+    this.seedService.jobModalitySeed();
     this.seedService.companyContractSeed();
+    this.seedService.worldCountrySeed();
+    this.seedService.languageSeed();
   }
 }

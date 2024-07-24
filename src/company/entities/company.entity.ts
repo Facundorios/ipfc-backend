@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { JobOffer } from './jobOffer.entity';
 
 @Entity()
 export class Company {
@@ -6,9 +7,7 @@ export class Company {
   id: string;
 
   @Column({
-    type: 'varchar',
-    length: 100,
-    unique: true
+    unique: true,
   })
   name: string;
 
@@ -16,7 +15,7 @@ export class Company {
   description: string;
 
   @Column()
-  industry_Id: number;
+  industry_id: number;
 
   @Column()
   address: string;
@@ -40,4 +39,10 @@ export class Company {
 
   @Column()
   justification: string;
+
+  @OneToMany(() => JobOffer, (jobOffer) => jobOffer.company, {
+    cascade: true,
+    eager: true,
+  })
+  jobOffers?: JobOffer[];
 }
