@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { CompanyService } from './company.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
-import { JobOfferDto } from './dto/create-job-offer.dto';
 
 @Controller('company')
 export class CompanyController {
@@ -30,16 +29,8 @@ export class CompanyController {
     return this.companyService.findOne(id);
   }
 
-  @Post(':id/create-job-offer')
-  createJobOffer(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() jobOfferDto: JobOfferDto,
-  ) {
-    return this.companyService.createJobOffer(id, jobOfferDto);
-  }
-
   @Patch('update-status/:id/:status')
-  updateStatus(@Param('id') id: string, @Param('status') status: string) {
+  updateStatusCompany(@Param('id') id: string, @Param('status') status: string) {
     return this.companyService.setCompanyStatus(id, status);
   }
 }
