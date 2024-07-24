@@ -30,9 +30,12 @@ export class CompanyController {
     return this.companyService.findOne(id);
   }
 
-  @Post('create-job-offer')
-  createJobOffer(@Body() jobOfferDto: JobOfferDto) {
-    return this.companyService.createJobOffer(jobOfferDto);
+  @Post(':id/create-job-offer')
+  createJobOffer(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() jobOfferDto: JobOfferDto,
+  ) {
+    return this.companyService.createJobOffer(id, jobOfferDto);
   }
 
   @Patch('update-status/:id/:status')

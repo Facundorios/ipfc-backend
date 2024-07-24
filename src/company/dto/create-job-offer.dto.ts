@@ -7,8 +7,4 @@ export class JobOfferDto {
 
   @IsString()
   description: string;
-
-  @IsString()
-  @IsUUID()
-  company_id: string;
 }

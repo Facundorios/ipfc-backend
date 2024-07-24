@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Company } from './entities/company.entity';
 import { Repository } from 'typeorm';
 import { JobOfferDto } from './dto/create-job-offer.dto';
-import { JobOffer } from './entities/jobOffer.entity';
+import { JobOffer } from './entities/company-job-offer.entity';
 
 @Injectable()
 export class CompanyService {
@@ -30,14 +30,25 @@ export class CompanyService {
   }
 
   async setCompanyStatus(id: string, status: string) {
-    const company = this.findOne(id);
-    if (!company) throw new Error(`Company with id ${id} not found`);
+    try {
+      const company = this.findOne(id);
+      if (!company) throw new Error(`Company with id ${id} not found`);
+      const companyStatus = await this.companyRepostiroy.update(id, { status });
 
-    const companyStatus = await this.companyRepostiroy.update(id, {
-      status: status,
-    });
-    return companyStatus;
+      return companyStatus;
+    } catch (error) {
+      throw new BadRequestException(`${error}`);
+    }
   }
 
-  async createJobOffer(jobOfferDto: JobOfferDto) {}
+  async createJobOffer(id: string, jobOfferDto: JobOfferDto) {
+    const company = await this.companyRepostiroy.findOneBy({
+      id,
+    });
+    if (!company) throw new Error(`Company with id ${id} not found`);
+    const jobOffer = this.jobOfferRepository.create(jobOfferDto);
+    jobOffer.company = company;
+    await this.jobOfferRepository.save(jobOffer);
+    return jobOffer;
+  }
 }
