@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { SeedModule } from './seed/seed.module';
 import { CompanyModule } from './company/company.module';
 import { JobsModule } from './jobs/jobs.module';
+import { AssociationsModule } from './associations/associations.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { JobsModule } from './jobs/jobs.module';
     SeedModule,
     CompanyModule,
     JobsModule,
+    AssociationsModule,
   ],
   controllers: [],
   providers: [AppService],

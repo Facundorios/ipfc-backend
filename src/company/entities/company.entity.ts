@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { JobOffer } from 'src/jobs/entities/job.entity';
-
+import { Association } from 'src/associations/entities/association.entity';
 
 @Entity()
 export class Company {
@@ -42,8 +42,11 @@ export class Company {
   justification: string;
 
   @OneToMany(() => JobOffer, (jobOffer) => jobOffer.company, {
-    cascade: true,
     eager: true,
+    
   })
   jobOffers?: JobOffer[];
+
+  @OneToMany(() => Association, (association) => association.company)
+  associations?: Association[];
 }

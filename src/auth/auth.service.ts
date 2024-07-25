@@ -30,7 +30,7 @@ export class AuthService {
       const roleNameAsString: string = createUserDto.roleName; // Este valor vendría del DTO
       const roleValue: ValidRoles = ValidRoles[roleNameAsString];
       if (!roleValue) throw new Error('Invalid role name');
-      
+
       const { password, roleName, ...rest } = createUserDto;
 
       const role = await this.roleRepository.findOne({
@@ -45,22 +45,27 @@ export class AuthService {
       });
 
       await this.userRepository.save(user);
-      return { token: this.generateToken({ id: user.id }) };
+      return { token: this.generateToken({ id: user.id, role: roleValue }) };
     } catch (error) {
-      console.log(error);
+      if (error.code === '23505') {
+        throw new UnauthorizedException('User already exists');
+      }
     }
   }
 
   async loginUser(loginDto: LoginDto) {
     const { email, password } = loginDto;
 
-    const user = await this.userRepository.findOne({ where: { email: email } });
+    const user = await this.userRepository.findOne({
+      where: { email: email },
+      relations: ['role'],
+    });
     if (!user) throw new NotFoundException(`User not found with: ${email}.`);
 
     if (!bcrypt.compareSync(password, user.password)) {
       throw new UnauthorizedException('Incorrect Password');
     }
-    return { token: this.generateToken({ id: user.id }) };
+    return { token: this.generateToken({ id: user.id, role: user.role.role }) };
   }
 
   private generateToken(payload: JwtPayload) {
