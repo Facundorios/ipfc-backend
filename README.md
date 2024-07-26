@@ -12,9 +12,9 @@
 
 ## Descripción
 
-[Instituto Politecnico Formosa Conecta](), o simplemente llamado **IPF Conecta**, es una plataforma online orientada a la busqueda de trabajo y potenciar las oportunidades laborales de los estudiantes para los egresados del Instituto Politecnico Formosa.
+ **IPF Conecta** ([Instituto Politecnico Formosa Conecta](https://www.ipf.edu.ar/)), o simplemente llamado  *IPFC*, es una plataforma online orientada a la busqueda de trabajo y potenciar las oportunidades laborales de los estudiantes egresados del IPF.
 
-En este repositorio se encuentra el desarrollo del backend de la aplicación, asi que si estas especializado en el la programación y estas interesado en probar la aplicación, te dejo los pasos para inicializar el proyecto.
+En este repositorio se encuentra el desarrollo del backend de dicha aplicación, asi que si estas especializado en el la programación y estas interesado en probar la aplicación, te dejo los pasos para inicializar el proyecto. Cabe aclarar que deberás de tener algunas intalaciones previas como configuraciones en tu computadora. En este caso, requerirás de NodeJS y Tener Docker ya inicializado ( En su defecto PgAdmin ).
 
 ## Instalación de librerias.
 
