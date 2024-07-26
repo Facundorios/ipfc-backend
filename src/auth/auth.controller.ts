@@ -1,7 +1,10 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './dto';
 import { AuthGuard } from './guards/auth.guard';
+import { RequestUser } from './interfaces';
+import { Roles } from './decorators/role.decorator';
+import { RolesGuard } from './guards/roles.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -21,9 +24,13 @@ export class AuthController {
     return this.authService.getUsers();
   }
 
-  @Get('Route-protected')
-  @UseGuards(AuthGuard)
-  auth() {
-    return 'Hello, authenticated user!';
+  @Get('profile')
+  @Roles('admin')
+  @UseGuards(AuthGuard, RolesGuard)
+  profile(@Req() request: RequestUser) {
+    //console.log(request.user);
+    //return `Hello, authenticated user!`;
+
+    return this.authService.profile(request.user);
   }
 }

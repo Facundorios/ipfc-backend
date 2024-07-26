@@ -73,6 +73,13 @@ export class AuthService {
     return users;
   }
 
+  async profile({ id, role }: { id: string; role: string }) {
+    // if (role !== 'admin') {
+    //   throw new UnauthorizedException('You are not an admin');
+    // }
+    return await this.userRepository.findOne({ where: { id: id } });
+  }
+
   private generateToken(payload: JwtPayload) {
     const token = this.jwtService.sign(payload);
     return token;
