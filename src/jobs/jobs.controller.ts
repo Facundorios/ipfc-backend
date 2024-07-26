@@ -1,10 +1,12 @@
-import { Controller, Post, Body, Param, ParseUUIDPipe } from '@nestjs/common';
+import { Controller, Post, Body, Param, ParseUUIDPipe, UseGuards } from '@nestjs/common';
 import { JobsService } from './jobs.service';
 import { JobOfferDto } from './dto/create-job.dto';
+
 
 @Controller('jobs-offer')
 export class JobsController {
   constructor(private readonly jobsService: JobsService) {}
+
 
   @Post(':id/create')
   createJobOffer( 

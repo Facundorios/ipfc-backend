@@ -1,7 +1,7 @@
 export enum ValidRoles {
-  superAdmin = 'superAdmin',
-  admin = 'admin',
-  student = 'student',
-  recruiter = 'recruiter',
-  inversor = 'inversor',
+  SUPERADMIN = 'superAdmin',
+  ADMIN = 'admin',
+  STUDENT = 'student',
+  RECRUITER = 'recruiter',
+  INVERSOR = 'inversor',
 }

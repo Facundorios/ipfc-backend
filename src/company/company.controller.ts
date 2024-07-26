@@ -15,9 +15,7 @@ export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
   @Post('create')
-  create(
-    @Body() createCompanyDto: CreateCompanyDto,
-  ) {
+  create(@Body() createCompanyDto: CreateCompanyDto) {
     return this.companyService.create(createCompanyDto);
   }
 

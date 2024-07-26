@@ -73,7 +73,7 @@ export class AuthService {
     return users;
   }
 
-  async profile({ id, role }: { id: string; role: string }) {
+  async profile({ id }: { id: string }) {
     // if (role !== 'admin') {
     //   throw new UnauthorizedException('You are not an admin');
     // }
