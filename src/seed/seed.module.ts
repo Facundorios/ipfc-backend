@@ -7,9 +7,9 @@ import {
   CompanyContract,
   CompanyIndustry,
   JobModality,
-  Language,
+  WorldCountry,
+  WorldLanguage,
 } from './entities';
-import { WorldCountry } from './entities/world-countries.entity';
 
 @Module({
   controllers: [SeedController],
@@ -21,7 +21,7 @@ import { WorldCountry } from './entities/world-countries.entity';
       JobModality,
       CompanyContract,
       WorldCountry,
-      Language,
+      WorldLanguage
     ]),
   ],
 })

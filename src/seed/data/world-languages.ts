@@ -1,4 +1,4 @@
-export const languagesWorld = [
+export const worldLanguages = [
   { id: 1, name: 'Inglés' },
   { id: 2, name: 'Español' },
   { id: 3, name: 'Francés' },

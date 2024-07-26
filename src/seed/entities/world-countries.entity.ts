@@ -10,4 +10,5 @@ export class WorldCountry {
 
   @Column()
   code: string;
+  
 }

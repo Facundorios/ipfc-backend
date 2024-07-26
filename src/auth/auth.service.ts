@@ -9,7 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
 
-import { CreateUserDto, LoginDto } from './dto';
+import { RegisterDto, LoginDto } from './dto';
 import { Role, User } from './entities';
 import { JwtPayload, ValidRoles } from './interfaces';
 
@@ -25,13 +25,13 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async createUser(createUserDto: CreateUserDto) {
+  async createUser(registerDto: RegisterDto) {
     try {
-      const roleNameAsString: string = createUserDto.roleName; // Este valor vendría del DTO
+      const roleNameAsString: string = registerDto.roleName; // Este valor vendría del DTO
       const roleValue: ValidRoles = ValidRoles[roleNameAsString];
       if (!roleValue) throw new Error('Invalid role name');
 
-      const { password, roleName, ...rest } = createUserDto;
+      const { password, roleName, ...rest } = registerDto;
 
       const role = await this.roleRepository.findOne({
         where: { role: roleValue },
@@ -66,6 +66,11 @@ export class AuthService {
       throw new UnauthorizedException('Incorrect Password');
     }
     return { token: this.generateToken({ id: user.id, role: user.role.role }) };
+  }
+
+  async getUsers() {
+    const users = await this.userRepository.find();
+    return users;
   }
 
   private generateToken(payload: JwtPayload) {

@@ -11,7 +11,7 @@ export class SeedController {
     this.seedService.companyIndustrySeed();
     this.seedService.jobModalitySeed();
     this.seedService.companyContractSeed();
-    this.seedService.worldCountrySeed();
+    this.seedService.countrySeed();
     this.seedService.languageSeed();
   }
 }

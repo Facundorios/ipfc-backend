@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { CompanyService } from './company.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
-import { RawHeaders } from 'src/auth/decorators/headers.decorator';
 
 @Controller('company')
 export class CompanyController {
@@ -18,9 +17,7 @@ export class CompanyController {
   @Post('create')
   create(
     @Body() createCompanyDto: CreateCompanyDto,
-    @RawHeaders() headers: string,
   ) {
-    console.log(headers);
     return this.companyService.create(createCompanyDto);
   }
 

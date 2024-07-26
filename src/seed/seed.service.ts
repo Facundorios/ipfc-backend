@@ -9,15 +9,15 @@ import {
   companyContracts,
   companyIndustries,
   jobModalities,
-  countriesWorld,
-  languagesWorld,
+  worldCountries,
+  worldLanguages,
 } from './data';
 import {
   CompanyContract,
   CompanyIndustry,
   JobModality,
   WorldCountry,
-  Language,
+  WorldLanguage,
 } from './entities';
 
 @Injectable()
@@ -38,8 +38,8 @@ export class SeedService {
     @InjectRepository(WorldCountry)
     private readonly worldCountryRepository: Repository<WorldCountry>,
 
-    @InjectRepository(Language)
-    private readonly languageRepository: Repository<Language>,
+    @InjectRepository(WorldLanguage)
+    private readonly languageRepository: Repository<WorldLanguage>,
   ) {}
 
   async roleSeed() {
@@ -72,10 +72,9 @@ export class SeedService {
     });
     return this.companyContractRepository.save(contracts);
   }
-
-  async worldCountrySeed() {
+  async countrySeed() {
     await this.worldCountryRepository.delete({});
-    const countries = Object.values(countriesWorld).map((country) => {
+    const countries = Object.values(worldCountries).map((country) => {
       return this.worldCountryRepository.create(country);
     });
     return this.worldCountryRepository.save(countries);
@@ -83,7 +82,7 @@ export class SeedService {
 
   async languageSeed() {
     await this.languageRepository.delete({});
-    const languages = Object.values(languagesWorld).map((language) => {
+    const languages = Object.values(worldLanguages).map((language) => {
       return this.languageRepository.create(language);
     });
     return this.languageRepository.save(languages);

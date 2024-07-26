@@ -1,5 +1,5 @@
-export { companyContracts } from './contractsCompany';
-export { companyIndustries } from './industriesCompanyt';
-export { countriesWorld } from './countriesWorld';
-export { jobModalities } from './modalitiesJob';
-export { languagesWorld } from './languagesWorld';
+export { companyContracts } from './company-contracts';
+export { companyIndustries } from './company-industries';
+export { jobModalities } from './job-modalities';
+export { worldCountries } from './world-countries';
+export { worldLanguages } from './world-languages';
