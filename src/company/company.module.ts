@@ -5,13 +5,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Company } from './entities/company.entity';
 import { Association } from 'src/associations/entities/association.entity';
 import { JobOffer } from 'src/jobs/entities/job.entity';
-
+import { AuthModule } from 'src/auth/auth.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   controllers: [CompanyController],
   providers: [CompanyService],
   imports: [
     TypeOrmModule.forFeature([Company, Association, JobOffer]),
+    AuthModule,
+    JwtModule,
   ],
 })
 export class CompanyModule {}
