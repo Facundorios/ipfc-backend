@@ -1,8 +1,10 @@
 import {
+  BadRequestException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
+
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -37,19 +39,21 @@ export class AuthService {
         where: { role: roleValue },
       });
       if (!role) throw new Error('Role not found');
-
+ 
       const user = this.userRepository.create({
         ...rest,
         password: await bcrypt.hash(password, 15),
         role: role,
       });
 
+      console.log(user)
       await this.userRepository.save(user);
       return { token: this.generateToken({ id: user.id, role: roleValue }) };
     } catch (error) {
       if (error.code === '23505') {
         throw new UnauthorizedException('User already exists');
       }
+      throw new BadRequestException(`${error}`)
     }
   }
 

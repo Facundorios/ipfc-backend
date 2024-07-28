@@ -16,26 +16,28 @@ import { ValidRoles } from 'src/auth/interfaces';
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
-
-  @Auth(ValidRoles.RECRUITER)
+  @Auth(ValidRoles.recruiter)
   @Post('create')
   create(@Body() createCompanyDto: CreateCompanyDto) {
     return this.companyService.create(createCompanyDto);
   }
 
+  @Auth(ValidRoles.recruiter)
   @Get('list')
   seachCompanies() {
     return this.companyService.findAll();
   }
 
+  @Auth(ValidRoles.recruiter)
   @Get(':id')
   searchCompany(@Param('id', ParseUUIDPipe) id: string) {
     return this.companyService.findOne(id);
   }
 
+  @Auth(ValidRoles.admin)
   @Patch('update-status/:id/:status')
   updateCompanyStatus(
-    @Param('id') id: string,
+    @Param('id', ParseUUIDPipe) id: string,
     @Param('status') status: string,
   ) {
     return this.companyService.setCompanyStatus(id, status);

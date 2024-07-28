@@ -1,11 +1,12 @@
 import {
   Column,
   Entity,
-  JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Role } from './userRole.entity';
+import { Role } from './role.entity';
+import { Association } from 'src/associations/entities/association.entity';
 
 @Entity({ name: 'user' })
 export class User {
@@ -49,4 +50,6 @@ export class User {
   @ManyToOne(() => Role, (role) => role.users)
   role: Role;
 
+  @OneToMany(()=> Association, (association) => association.user)
+  associations: Association[]
 }

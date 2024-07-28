@@ -3,12 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Repository } from 'typeorm';
 
-import { Role } from 'src/auth/entities/userRole.entity';
+import { Role } from 'src/auth/entities';
 import { ValidRoles } from 'src/auth/interfaces/valid-roles.interface';
+
 import {
   companyContracts,
   companyIndustries,
   jobModalities,
+  jobSkills,
   worldCountries,
   worldLanguages,
 } from './data';
@@ -16,6 +18,7 @@ import {
   CompanyContract,
   CompanyIndustry,
   JobModality,
+  JobSkill,
   WorldCountry,
   WorldLanguage,
 } from './entities';
@@ -27,19 +30,22 @@ export class SeedService {
     private readonly roleRepository: Repository<Role>,
 
     @InjectRepository(CompanyIndustry)
-    private readonly companyIndustryRepository: Repository<CompanyIndustry>,
+    private readonly industryRepository: Repository<CompanyIndustry>,
 
     @InjectRepository(JobModality)
-    private readonly jobModalityRepository: Repository<JobModality>,
+    private readonly modalityRepository: Repository<JobModality>,
 
     @InjectRepository(CompanyContract)
-    private readonly companyContractRepository: Repository<CompanyContract>,
+    private readonly contractRepository: Repository<CompanyContract>,
 
     @InjectRepository(WorldCountry)
-    private readonly worldCountryRepository: Repository<WorldCountry>,
+    private readonly countryRepository: Repository<WorldCountry>,
 
     @InjectRepository(WorldLanguage)
     private readonly languageRepository: Repository<WorldLanguage>,
+
+    @InjectRepository(JobSkill)
+    private readonly skillRepository: Repository<JobSkill>,
   ) {}
 
   async roleSeed() {
@@ -48,43 +54,46 @@ export class SeedService {
     await this.roleRepository.insert(roles);
     return roles;
   }
-
   async companyIndustrySeed() {
-    await this.companyIndustryRepository.delete({});
+    await this.industryRepository.delete({});
     const industries = Object.values(companyIndustries).map((industry) => {
-      return this.companyIndustryRepository.create(industry);
+      return this.industryRepository.create(industry);
     });
-    return this.companyIndustryRepository.save(industries);
+    return this.industryRepository.save(industries);
   }
-
   async jobModalitySeed() {
-    await this.jobModalityRepository.delete({});
+    await this.modalityRepository.delete({});
     const modalities = Object.values(jobModalities).map((modality) => {
-      return this.jobModalityRepository.create(modality);
+      return this.modalityRepository.create(modality);
     });
-    return this.jobModalityRepository.save(modalities);
+    return this.modalityRepository.save(modalities);
   }
-
   async companyContractSeed() {
-    await this.companyContractRepository.delete({});
+    await this.contractRepository.delete({});
     const contracts = Object.values(companyContracts).map((contract) => {
-      return this.companyContractRepository.create(contract);
+      return this.contractRepository.create(contract);
     });
-    return this.companyContractRepository.save(contracts);
+    return this.contractRepository.save(contracts);
   }
   async countrySeed() {
-    await this.worldCountryRepository.delete({});
+    await this.countryRepository.delete({});
     const countries = Object.values(worldCountries).map((country) => {
-      return this.worldCountryRepository.create(country);
+      return this.countryRepository.create(country);
     });
-    return this.worldCountryRepository.save(countries);
+    return this.countryRepository.save(countries);
   }
-
   async languageSeed() {
     await this.languageRepository.delete({});
     const languages = Object.values(worldLanguages).map((language) => {
       return this.languageRepository.create(language);
     });
     return this.languageRepository.save(languages);
+  }
+  async jobSkillSeed() {
+    await this.skillRepository.delete({});
+    const skills = Object.values(jobSkills).map((skill) => {
+      return this.skillRepository.create(skill);
+    });
+    return this.skillRepository.save(skills);
   }
 }

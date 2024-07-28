@@ -8,11 +8,12 @@
 <a href="https://www.postgresql.org/" target="_blank"><img alt="PostgreSQL" src="https://img.shields.io/badge/PostgreSQL-336791.svg?logo=postgresql&logoColor=white"></a>
 <a href="https://www.docker.com/" target="_blank"><img alt="Docker" src="https://img.shields.io/badge/Docker-2496ED.svg?logo=docker&logoColor=white"></a>
 <a href="https://typeorm.io/" target="_blank"><img alt="TypeORM" src="https://img.shields.io/badge/TypeORM-262627.svg?logo=typeorm&logoColor=white"></a>
+<a href="https://www.postman.com/" target="_blank"><img alt="Postman" src="https://img.shields.io/badge/Postman-FF6C37.svg?logo=postman&logoColor=white"></a>
 </p>
 
 ## Descripción
 
- **IPFC** ([Instituto Politecnico Formosa Conecta](https://www.ipf.edu.ar/)), o simplemente llamado  *IPF Conecta*, es una plataforma online orientada a la busqueda de trabajo y potenciar las oportunidades laborales de los estudiantes egresados del IPF.
+**IPFC** ([Instituto Politecnico Formosa Conecta](https://www.ipf.edu.ar/)), o simplemente llamado _IPF Conecta_, es una plataforma online orientada a la busqueda de trabajo y potenciar las oportunidades laborales de los estudiantes egresados del IPF.
 
 En este repositorio se encuentra el desarrollo del backend de dicha aplicación, asi que si estas especializado en el la programación y estas interesado en probar la aplicación, te dejo los pasos para inicializar el proyecto. Cabe aclarar que deberás de tener algunas intalaciones previas como configuraciones en tu computadora. En este caso, requerirás de NodeJS y Tener Docker ya inicializado ( En su defecto PgAdmin ).
 
@@ -50,12 +51,4 @@ pnpm run start
 pnpm run start:dev
 ```
 
-## Peticiones Http:
-
-#### Seed: Datos precargados (Ciudades, Idiomas, Industrias, etc.)
-
-Metodo: GET
-
-```
-{HOST}/seed
-```
+### Para ver las peticiones posibles, vease el archivo **HttpResquests.md**.

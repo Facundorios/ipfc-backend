@@ -7,6 +7,7 @@ import {
   CompanyContract,
   CompanyIndustry,
   JobModality,
+  JobSkill,
   WorldCountry,
   WorldLanguage,
 } from './entities';
@@ -17,12 +18,14 @@ import {
   imports: [
     AuthModule,
     TypeOrmModule.forFeature([
+      CompanyContract,
       CompanyIndustry,
       JobModality,
-      CompanyContract,
+      JobSkill,
       WorldCountry,
-      WorldLanguage
+      WorldLanguage,
     ]),
   ],
+  exports: [SeedService],
 })
 export class SeedModule {}

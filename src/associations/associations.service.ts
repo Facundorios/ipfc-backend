@@ -1,14 +1,16 @@
 import {
   BadRequestException,
-  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateAssociationDto } from './dto/create-association.dto.js';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Association } from './entities/association.entity';
+
 import { Repository } from 'typeorm';
+
+import { CreateAssociationDto } from './dto/create-association.dto.js';
+import { Association } from './entities/association.entity';
 import { Company } from 'src/company/entities/company.entity';
+import { User } from 'src/auth/entities/user.entity';
 
 @Injectable()
 export class AssociationsService {
@@ -18,19 +20,33 @@ export class AssociationsService {
 
     @InjectRepository(Company)
     private readonly companyReposity: Repository<Company>,
+
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
   ) {}
 
   async createAssociation(
     createAssociationDto: CreateAssociationDto,
-    id: string,
+    companyId: string,
+    userId: string,
   ) {
-    const company = await this.companyReposity.findOneBy({ id });
-    if (!company)
-      throw new NotFoundException(`Company with ID ${id} not found`);
+    const company = await this.companyReposity.findOneBy({ id: companyId });
+    if (!company) throw new NotFoundException(`Company not found`);
+
+    const user = await this.userRepository.findOneBy({  id: userId });
+    if (!user) throw new NotFoundException(`User not found`);
+
     const association = this.associationRepository.create(createAssociationDto);
     association.company = company;
-    await this.associationRepository.save(association);
-    return association;
+    association.user = user;
+
+    try {
+      await this.associationRepository.save(association);
+    } catch (error) {
+      console.log(error)
+      throw new BadRequestException(`${error}`);
+    }
+    return association
   }
 
   async setAssociationsStatus(id: string, status: string) {
@@ -38,8 +54,9 @@ export class AssociationsService {
       const association = await this.associationRepository.findOneBy({ id });
       if (!association) throw new NotFoundException(`La asociación no existe`);
       await this.associationRepository.update(id, { status });
-      return association;
+      return "La asociación ya ha sido actualizada";
     } catch (error) {
+      console.log(error)
       throw new BadRequestException(`${error}`);
     }
   }

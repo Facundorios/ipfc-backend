@@ -20,6 +20,6 @@ export class RegisterDto {
   about: string;
 
   @IsString()
-  @IsIn(['student', 'inversor', 'recruiter'])
+  @IsIn(['student', 'inversor', 'recruiter', 'admin', 'superAdmin'])
   roleName: string;
 }

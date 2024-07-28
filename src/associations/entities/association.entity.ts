@@ -1,3 +1,4 @@
+import { User } from 'src/auth/entities';
 import { Company } from 'src/company/entities/company.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -13,4 +14,7 @@ export class Association {
     default: 'pendiente',
   })
   status: string;
+
+  @ManyToOne(() =>  User, (user) => user.associations )
+  user: User
 }

@@ -10,7 +10,7 @@ import { RolesGuard, AuthGuard } from './guards';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('singup')
+  @Post('signup') 
   signup(@Body() registerDto: RegisterDto) {
     return this.authService.createUser(registerDto);
   }
@@ -25,7 +25,7 @@ export class AuthController {
   }
 
   @Get('profile')
-  @Roles(ValidRoles.ADMIN)
+  @Roles(ValidRoles.admin)
   @UseGuards(AuthGuard, RolesGuard)
   profile(@Req() request: RequestUser) {
     //console.log(request.user);
