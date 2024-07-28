@@ -26,4 +26,8 @@ export class JobsService {
     await this.jobOfferRepository.save(jobOffer);
     return jobOffer;
   }
+
+  async getJobsOffers() {
+    return await this.jobOfferRepository.find();
+  }
 }

@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Param, ParseUUIDPipe, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Param, ParseUUIDPipe, UseGuards, Get } from '@nestjs/common';
 import { JobsService } from './jobs.service';
 import { JobOfferDto } from './dto/create-job.dto';
 
@@ -14,5 +14,10 @@ export class JobsController {
     @Body() jobOfferDto: JobOfferDto,
   ) {
     return this.jobsService.createJobOffer(id, jobOfferDto);
+  }
+
+  @Get('list')
+  getJobsOffers() {
+    return this.jobsService.getJobsOffers();
   }
 }
