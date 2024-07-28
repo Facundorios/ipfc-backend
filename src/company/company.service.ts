@@ -8,19 +8,42 @@ import { CreateCompanyDto } from './dto/create-company.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Company } from './entities/company.entity';
 import { Repository } from 'typeorm';
+import { CompanyContract, CompanyIndustry } from 'src/seed/entities';
 
 @Injectable()
 export class CompanyService {
   constructor(
     @InjectRepository(Company)
     private readonly companyRepostiroy: Repository<Company>,
+
+    @InjectRepository(CompanyContract)
+    private readonly contractRepository: Repository<CompanyContract>,
+
+    @InjectRepository(CompanyIndustry)
+    private readonly industryRepository: Repository<CompanyIndustry>,
   ) {}
 
   async create(createCompanyDto: CreateCompanyDto) {
     try {
-      this.companyRepostiroy.create(createCompanyDto);
-      await this.companyRepostiroy.save(createCompanyDto);
+      const contract = await this.contractRepository.findOneBy({
+        id: createCompanyDto.contractId,
+      });
+      if (!contract) throw new NotFoundException(`El contrato no existe.`);
+
+      const industry = await this.industryRepository.findOneBy({
+        id: createCompanyDto.industryId,
+      });
+      if (!industry) throw new NotFoundException(`La industria no existe.`);
+
+      const company = this.companyRepostiroy.create({
+        ...createCompanyDto,
+        contract: contract,
+        industry: industry,
+      });
+      await this.companyRepostiroy.save(company);
+      console.log(company);
     } catch (error) {
+      console.log(error);
       if (error.code === '23505')
         throw new BadRequestException('La empresa ya existe.');
       throw new BadRequestException(`${error}`);

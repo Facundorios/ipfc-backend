@@ -15,23 +15,30 @@ export class CreateCompanyDto {
   @IsString()
   description: string;
   
-  @IsInt()
-  @IsPositive()
-  @IsNumber()
-  industryId: number;
-
+  
   @IsString()
   address: string;
-
+  
   @IsOptional()
   @IsString()
   logoUrl: string;
-
+  
   @IsInt()
   @IsPositive()
   @IsNumber()
   cantEmployees: number;
-
+  
   @IsString()
   justification: string;
+  
+  @IsPositive()
+  @IsInt()
+  @IsNumber()
+  industryId: number;
+
+  @IsPositive()
+  @IsInt()
+  @IsNumber()
+  contractId: number
+
 }

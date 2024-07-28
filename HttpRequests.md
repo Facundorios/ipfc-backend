@@ -57,19 +57,19 @@ Hay muchas peticiones que estan protegidas, es decir, que necesitan de una auten
 
 # Con un Token de usuario Recruiter:
 
-### Lista de compañias/empresas
+### Lista de compañias/compañias
 
 ```
 localhost:4000/api/company/list
 ```
 
-### Busqueda individual usando el id de la empresa
+### Busqueda individual usando el id de la compañia
 
 ```
 localhost:4000/api/company/:id
 ```
 
-### Creación de una empresa.
+### Creación de una compañia.
 
 ```
 localhost:4000/api/company/create
@@ -88,23 +88,36 @@ localhost:4000/api/company/create
 }
 ```
 
-### Crear una asociación de una compañia
+### Crear una asociación de una compañia:
 
 ```
-localhost:4000/api/associations/uuid-de-una-empresa/create
+localhost:4000/api/associations/uuid-de-una-compañia/create
 ```
 
 ### Crear una oferta de trabajo:
 
 ```
-localhost:4000/api/jobs-offer/uuid-de-la-empresa/create
+localhost:4000/api/jobs-offer/uuid-de-la-compañia/create
 ```
 
-### Cuerpo de la petición
+### Cuerpo de la petición:
 
 ```
 {
     "title": "Trabajo 1",
     "description": "Esto es una descripción"
 }
+```
+
+# Con un Token de usuario Admin:
+
+
+### Aceptar/Rechazar una compañia:
+
+```
+localhost:3000/api/company/update-status/uuid-de-la-compañia/rechazada
+```
+
+```
+localhost:3000/api/company/update-status/uuid-de-la-compañia/aceptada
 ```

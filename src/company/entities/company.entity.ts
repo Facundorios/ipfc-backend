@@ -1,6 +1,14 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { JobOffer } from 'src/jobs/entities/job.entity';
 import { Association } from 'src/associations/entities/association.entity';
+import { CompanyContract, CompanyIndustry } from 'src/seed/entities';
+import { companyContracts } from 'src/seed/data';
 
 @Entity()
 export class Company {
@@ -15,9 +23,6 @@ export class Company {
   @Column()
   description: string;
 
-  @Column()
-  industryId: number;
-  
   @Column()
   address: string;
 
@@ -41,11 +46,15 @@ export class Company {
   @Column()
   justification: string;
 
-  @OneToMany(() => JobOffer, (jobOffer) => jobOffer.company, {
-    eager: true,
-  })
+  @OneToMany(() => JobOffer, (jobOffer) => jobOffer.company, { eager: true })
   jobOffers?: JobOffer[];
 
   @OneToMany(() => Association, (association) => association.company)
   associations?: Association[];
+
+  @ManyToOne(() => CompanyContract, (contract) => contract.companies)
+  contract: CompanyContract;
+
+  @ManyToOne(() => CompanyIndustry, (industry) => industry.companies)
+  industry: CompanyIndustry;
 }

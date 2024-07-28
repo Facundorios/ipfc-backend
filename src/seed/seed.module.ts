@@ -21,8 +21,9 @@ import {
       JobModality,
       CompanyContract,
       WorldCountry,
-      WorldLanguage
+      WorldLanguage,
     ]),
   ],
+  exports: [SeedService],
 })
 export class SeedModule {}
