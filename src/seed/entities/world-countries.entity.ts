@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Company } from 'src/company/entities/company.entity';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class WorldCountry {
@@ -10,5 +11,8 @@ export class WorldCountry {
 
   @Column()
   code: string;
+
+  @OneToMany(() => Company, (company) => company.country)
+  companies: Company[];
   
 }

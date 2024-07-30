@@ -7,12 +7,13 @@ export class SeedController {
 
   @Get()
   executeSeed() {
-    // this.seedService.roleSeed();
-    // this.seedService.companyIndustrySeed();
+    this.seedService.roleSeed();
+    this.seedService.companyIndustrySeed();
     this.seedService.jobModalitySeed();
-    // this.seedService.companyContractSeed();
-    // this.seedService.countrySeed();
+    this.seedService.companyContractSeed();
+    this.seedService.countrySeed();
     this.seedService.languageSeed();
     this.seedService.jobSkillSeed()
-  }
+  } 
 }
+  

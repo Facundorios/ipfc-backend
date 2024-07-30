@@ -1,16 +1,13 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
-import { Roles } from './decorators/roles.decorator';
-import { LoginDto, RegisterDto } from './dto';
-import { RequestUser, ValidRoles } from './interfaces';
-import { RolesGuard, AuthGuard } from './guards';
+import { LoginDto, RegisterDto, ConfirmAccountDto } from './dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('signup') 
+  @Post('signup')
   signup(@Body() registerDto: RegisterDto) {
     return this.authService.createUser(registerDto);
   }
@@ -24,13 +21,18 @@ export class AuthController {
     return this.authService.getUsers();
   }
 
-  @Get('profile')
-  @Roles(ValidRoles.admin)
-  @UseGuards(AuthGuard, RolesGuard)
-  profile(@Req() request: RequestUser) {
-    //console.log(request.user);
-    //return `Hello, authenticated user!`;
-
-    return this.authService.profile(request.user);
+  @Patch('confirm-account')
+  confirmAccount(@Body() confirmAccountDto: ConfirmAccountDto) {
+    return this.authService.confirmAccount(confirmAccountDto);
   }
 }
+
+// @Get('profile')
+// @Roles(ValidRoles.admin)
+// @UseGuards(AuthGuard, RolesGuard)
+// profile(@Req() request: RequestUser) {
+//   //console.log(request.user);
+//   //return `Hello, authenticated user!`;
+
+//   return this.authService.profile(request.user);
+// }

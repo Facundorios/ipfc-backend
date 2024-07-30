@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { JobOffer } from 'src/jobs/entities/job.entity';
 import { Association } from 'src/associations/entities/association.entity';
-import { CompanyContract, CompanyIndustry } from 'src/seed/entities';
+import { CompanyContract, CompanyIndustry, WorldCountry } from 'src/seed/entities';
 import { companyContracts } from 'src/seed/data';
 
 @Entity()
@@ -23,7 +23,9 @@ export class Company {
   @Column()
   description: string;
 
-  @Column()
+  @Column({
+    unique: true,
+  })
   address: string;
 
   @Column({
@@ -57,4 +59,7 @@ export class Company {
 
   @ManyToOne(() => CompanyIndustry, (industry) => industry.companies)
   industry: CompanyIndustry;
+
+  @ManyToOne(() => WorldCountry, (worldCountry) => worldCountry.companies)
+  country: WorldCountry;
 }

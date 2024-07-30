@@ -41,4 +41,9 @@ export class CreateCompanyDto {
   @IsNumber()
   contractId: number
 
+  @IsPositive()
+  @IsInt()
+  @IsNumber()
+  countryId: number
+
 }

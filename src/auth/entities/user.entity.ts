@@ -1,4 +1,5 @@
 import {
+  BeforeInsert,
   Column,
   Entity,
   ManyToOne,
@@ -47,9 +48,30 @@ export class User {
   })
   password: string;
 
+  @Column({
+    type: 'text',
+  })
+  code: string;
+
+  @Column({
+    type: 'boolean',
+    default: false,
+  })
+  isVerified: boolean
+
   @ManyToOne(() => Role, (role) => role.users)
   role: Role;
 
-  @OneToMany(()=> Association, (association) => association.user)
-  associations: Association[]
+  @OneToMany(() => Association, (association) => association.user)
+  associations: Association[];
+
+  @BeforeInsert()
+  emailToLowerCase() {
+    this.email = this.email.toLowerCase();
+  }
+
+  @BeforeInsert()
+  generateCode() {
+    this.code = Math.random().toString(36).substring(2);
+  }
 }
