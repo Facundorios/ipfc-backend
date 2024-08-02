@@ -8,24 +8,26 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 
+import * as nodemailer from 'nodemailer'
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
 
 import { RegisterDto, LoginDto, ConfirmAccountDto } from './dto';
 import { Role, User } from './entities';
 import { JwtPayload, ValidRoles } from './interfaces';
-import { Auth } from './decorators/auth.decorator';
+import { MailerService } from '@nestjs-modules/mailer';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(Role)
     private readonly roleRepository: Repository<Role>,
-
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
 
     private readonly jwtService: JwtService,
+    
+    private readonly  mailerService: MailerService
   ) {}
 
   private generateToken(payload: JwtPayload) {
@@ -52,7 +54,7 @@ export class AuthService {
         role: role,
       });
 
-      console.log(user);
+      //console.log(user);
       await this.userRepository.save(user);
       return { token: this.generateToken({ id: user.id, role: roleValue }) };
     } catch (error) {
@@ -83,22 +85,20 @@ export class AuthService {
     return users;
   }
 
+  async sendEmail(email: string) {
+    
+  }
+
   async confirmAccount(confirmAccountDto: ConfirmAccountDto) {
     const { code } = confirmAccountDto;
     const user = await this.userRepository.findOneBy({ code });
     if (!user) throw new NotFoundException('Codigo no válido');
+
     try {
       await this.userRepository.update(user.id, { isVerified: true });
     } catch (error) {
       throw new BadRequestException(`${error}`);
     }
-    return "Cuenta verificada exitosamente";
+    return 'Cuenta verificada exitosamente';
   }
 }
-
-// async profile({ id }: { id: string }) {
-//   // if (role !== 'admin') {
-//   //   throw new UnauthorizedException('You are not an admin');
-//   // }
-//   return await this.userRepository.findOne({ where: { id: id } });
-// }

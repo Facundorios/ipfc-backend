@@ -75,7 +75,7 @@ export class CompanyService {
     return company;
   }
 
-  async setCompanyStatus(id: string, status: string) {
+  async setStatus(id: string, status: string) {
     try {
       const company = await this.findOne(id);
       if (!company) throw new NotFoundException(`La empresa no existe`);

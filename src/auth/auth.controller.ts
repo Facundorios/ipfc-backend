@@ -2,6 +2,8 @@ import { Body, Controller, Get, Patch, Post } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto, ConfirmAccountDto } from './dto';
+import { GetUser } from './guards';
+import { Roles } from './decorators/roles.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -21,7 +23,7 @@ export class AuthController {
     return this.authService.getUsers();
   }
 
-  @Patch('confirm-account')
+  @Patch('/confirm-account')
   confirmAccount(@Body() confirmAccountDto: ConfirmAccountDto) {
     return this.authService.confirmAccount(confirmAccountDto);
   }

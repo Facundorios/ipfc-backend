@@ -40,6 +40,6 @@ export class CompanyController {
     @Param('id', ParseUUIDPipe) id: string,
     @Param('status') status: string,
   ) {
-    return this.companyService.setCompanyStatus(id, status);
+    return this.companyService.setStatus(id, status);
   }
 }

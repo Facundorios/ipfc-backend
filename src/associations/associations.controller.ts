@@ -2,7 +2,6 @@ import { Body, Controller, Param, Patch, Post } from '@nestjs/common';
 import { AssociationsService } from './associations.service';
 import { CreateAssociationDto } from './dto/create-association.dto';
 import { GetUser } from 'src/auth/guards';
-import { User } from 'src/auth/entities';
 
 @Controller('associations')
 export class AssociationsController {

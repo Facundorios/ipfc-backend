@@ -33,20 +33,20 @@ export class AssociationsService {
     const company = await this.companyReposity.findOneBy({ id: companyId });
     if (!company) throw new NotFoundException(`Company not found`);
 
-    const user = await this.userRepository.findOneBy({  id: userId });
+    const user = await this.userRepository.findOneBy({ id: userId });
     if (!user) throw new NotFoundException(`User not found`);
 
     const association = this.associationRepository.create(createAssociationDto);
     association.company = company;
-    association.user = user;
+    association.user = user; 
 
     try {
       await this.associationRepository.save(association);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       throw new BadRequestException(`${error}`);
     }
-    return association
+    return association;
   }
 
   async setAssociationsStatus(id: string, status: string) {
@@ -54,9 +54,9 @@ export class AssociationsService {
       const association = await this.associationRepository.findOneBy({ id });
       if (!association) throw new NotFoundException(`La asociación no existe`);
       await this.associationRepository.update(id, { status });
-      return "La asociación ya ha sido actualizada";
+      return 'La asociación ya ha sido actualizada';
     } catch (error) {
-      console.log(error)
+      console.log(error);
       throw new BadRequestException(`${error}`);
     }
   }
